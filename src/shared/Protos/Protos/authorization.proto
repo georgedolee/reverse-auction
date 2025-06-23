@@ -1,0 +1,37 @@
+syntax = "proto3";
+package authorization;
+
+service AuthService {
+    rpc ValidateCredentials(ValidateCredentialsRequest) returns (ValidateCredentialsResponse);
+    rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+}
+
+message ValidateCredentialsRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message ValidateCredentialsResponse {
+    bool success = 1;
+    string user_id = 2;
+}
+
+message GetUserInfoRequest {
+    string user_id = 1;
+}
+
+message GetUserInfoResponse {
+    User user = 1;
+}
+
+message User {
+    string id = 1;
+    string username = 2;
+    repeated string roles = 3;
+    repeated Claim claims = 4;
+}
+
+message Claim {
+    string type = 1;
+    string value = 2;
+}
