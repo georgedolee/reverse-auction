@@ -31,7 +31,7 @@ public class Auction
             throw new InvalidOperationException("Only pending auctions can be postponed.");
         }
 
-        StartsAt = startTime;
+        StartsAt = startTime.AddSeconds(5);
         EndsAt = endTime;
 
         RaiseDomainEvent(new AuctionPostponedEvent(Guid.NewGuid(), Id, startTime, endTime));
@@ -44,7 +44,7 @@ public class Auction
             throw new InvalidOperationException("Only pending auctions can be started manually.");
         }
 
-        StartsAt = DateTime.UtcNow;
+        StartsAt = DateTime.UtcNow.AddSeconds(5);
         Status = AuctionStatus.Ongoing;
 
         RaiseDomainEvent(new AuctionStartedEvent(Guid.NewGuid(), Id, StartsAt));

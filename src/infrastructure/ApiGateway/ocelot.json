@@ -9,42 +9,8 @@
     }
   },
   "Routes": [
-    {
-      "UpstreamPathTemplate": "/gateway/auth/login",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/connect/token",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7250
-        }
-      ]
-    },
-    {
-      "UpstreamPathTemplate": "/gateway/auth/refresh",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/connect/token",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7250
-        }
-      ]
-    },
-    {
-      "UpstreamPathTemplate": "/gateway/auth/logout",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/connect/revocation",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7250
-        }
-      ]
-    },
+
+    // ---------- Auth ----------
     {
       "UpstreamPathTemplate": "/gateway/auth/register",
       "UpstreamHttpMethod": [ "Post" ],
@@ -57,6 +23,44 @@
         }
       ]
     },
+    {
+      "UpstreamPathTemplate": "/gateway/auth/login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/connect/token",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7250
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/auth/refresh",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/connect/token",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7250
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/auth/logout",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/connect/revocation",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7250
+        }
+      ]
+    },
+
+    // ---------- Users ----------
     {
       "UpstreamPathTemplate": "/gateway/users",
       "UpstreamHttpMethod": [ "Get" ],
@@ -82,9 +86,9 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/gateway/users/{id}/upload-photo",
-      "UpstreamHttpMethod": [ "Post" ],
-      "DownstreamPathTemplate": "/api/users/{id}/upload-photo",
+      "UpstreamPathTemplate": "/gateway/users/{id}/{action}",
+      "UpstreamHttpMethod": [ "Post", "Delete" ],
+      "DownstreamPathTemplate": "/api/users/{id}/{action}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -93,18 +97,8 @@
         }
       ]
     },
-    {
-      "UpstreamPathTemplate": "/gateway/users/{id}/delete-photo",
-      "UpstreamHttpMethod": [ "Delete" ],
-      "DownstreamPathTemplate": "/api/users/{id}/delete-photo",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7202
-        }
-      ]
-    },
+
+    // ---------- User Roles ----------
     {
       "UpstreamPathTemplate": "/gateway/users/{id}/roles/{roleName}",
       "UpstreamHttpMethod": [ "Post", "Delete" ],
@@ -141,6 +135,8 @@
         }
       ]
     },
+
+    // ---------- Static Files ----------
     {
       "UpstreamPathTemplate": "/gateway/uploads/{fileName}",
       "UpstreamHttpMethod": [ "Get" ],
@@ -152,6 +148,57 @@
           "Port": 7198
         }
       ]
+    },
+
+    // ---------- Auctions ----------
+    {
+      "UpstreamPathTemplate": "/gateway/auctions",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamPathTemplate": "/api/auctions",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/auctions/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/auctions/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/auctions/search",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/auctions/search",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/auctions/{id}/{action}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/auctions/{id}/{action}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
     }
+
   ]
 }

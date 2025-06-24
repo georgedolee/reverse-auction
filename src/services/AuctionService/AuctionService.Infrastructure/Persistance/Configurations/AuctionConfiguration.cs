@@ -12,16 +12,16 @@ internal sealed class AuctionConfiguration : IEntityTypeConfiguration<Auction>
         {
             tb.HasCheckConstraint(
                 "CK_Auctions_StartsAt_InFuture",
-                "StartsAt > GETUTCDATE()");
+                "StartsAt >= GETUTCDATE()");
 
             tb.HasCheckConstraint(
                 "CK_Auctions_EndsAt_After_StartsAt",
                 "EndsAt > StartsAt");
 
             tb.HasCheckConstraint(
-            "CK_Auctions_Currency_ISO",
-            "LEN(Currency) = 3 AND Currency = UPPER(Currency)"
-        );
+                "CK_Auctions_Currency_ISO",
+                "LEN(Currency) = 3 AND Currency = UPPER(Currency)"
+            );
         });
 
         builder.HasKey(a => a.Id);

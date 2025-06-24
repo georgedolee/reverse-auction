@@ -72,7 +72,7 @@ namespace AuctionService.Infrastructure.Migrations
 
                             t.HasCheckConstraint("CK_Auctions_EndsAt_After_StartsAt", "EndsAt > StartsAt");
 
-                            t.HasCheckConstraint("CK_Auctions_StartsAt_InFuture", "StartsAt > GETUTCDATE()");
+                            t.HasCheckConstraint("CK_Auctions_StartsAt_InFuture", "StartsAt >= GETUTCDATE()");
                         });
                 });
 
@@ -104,22 +104,6 @@ namespace AuctionService.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SharedKernel.DomainEvents.DomainEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AuctionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuctionId");
-
-                    b.ToTable("DomainEvent");
-                });
-
             modelBuilder.Entity("AuctionService.Domain.Entities.Bid", b =>
                 {
                     b.HasOne("AuctionService.Domain.Entities.Auction", null)
@@ -129,18 +113,9 @@ namespace AuctionService.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SharedKernel.DomainEvents.DomainEvent", b =>
-                {
-                    b.HasOne("AuctionService.Domain.Entities.Auction", null)
-                        .WithMany("DomainEvents")
-                        .HasForeignKey("AuctionId");
-                });
-
             modelBuilder.Entity("AuctionService.Domain.Entities.Auction", b =>
                 {
                     b.Navigation("Bids");
-
-                    b.Navigation("DomainEvents");
                 });
 #pragma warning restore 612, 618
         }

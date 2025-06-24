@@ -33,7 +33,7 @@ namespace AuctionService.Infrastructure.Migrations
                     table.PrimaryKey("PK_Auctions", x => x.Id);
                     table.CheckConstraint("CK_Auctions_Currency_ISO", "LEN(Currency) = 3 AND Currency = UPPER(Currency)");
                     table.CheckConstraint("CK_Auctions_EndsAt_After_StartsAt", "EndsAt > StartsAt");
-                    table.CheckConstraint("CK_Auctions_StartsAt_InFuture", "StartsAt > GETUTCDATE()");
+                    table.CheckConstraint("CK_Auctions_StartsAt_InFuture", "StartsAt >= GETUTCDATE()");
                 });
 
             migrationBuilder.CreateTable(
@@ -58,31 +58,9 @@ namespace AuctionService.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DomainEvent",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuctionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DomainEvent", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DomainEvent_Auctions_AuctionId",
-                        column: x => x.AuctionId,
-                        principalTable: "Auctions",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Bids_AuctionId",
                 table: "Bids",
-                column: "AuctionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DomainEvent_AuctionId",
-                table: "DomainEvent",
                 column: "AuctionId");
         }
 
@@ -91,9 +69,6 @@ namespace AuctionService.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bids");
-
-            migrationBuilder.DropTable(
-                name: "DomainEvent");
 
             migrationBuilder.DropTable(
                 name: "Auctions");
