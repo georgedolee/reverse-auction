@@ -1,4 +1,5 @@
-﻿using AuctionService.Application.Contracts.Models;
+﻿using AuctionService.API.Extensions;
+using AuctionService.Application.Contracts.Models;
 using AuctionService.Application.Contracts.Requests;
 using AuctionService.Application.Features.Auctions.Commands.Cancel;
 using AuctionService.Application.Features.Auctions.Commands.Create;
@@ -13,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Responses;
 using SharedKernel.Results;
-using System.Security.Claims;
 
 namespace AuctionService.API.Controllers;
 
@@ -36,9 +36,20 @@ public class AuctionsController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddAuctionAsync(
-        [FromBody] CreateAuctionCommand command, CancellationToken ct)
+    public async Task<IActionResult> CreateAuctionAsync(
+        [FromBody] CreateAuctionRequest request, CancellationToken ct)
     {
+        var userId = User.GetUserId();
+
+        var command = new CreateAuctionCommand(
+            ownerId: userId,
+            title: request.Title,
+            description: request.Description,
+            desiredPrice: request.DesiredPrice,
+            currency: request.Currency,
+            startsAt: request.StartsAt,
+            endsAt: request.EndsAt);
+
         var response = await _mediator.Send(command, ct);
 
         return CreatedAtAction(
@@ -99,7 +110,7 @@ public class AuctionsController : ControllerBase
     public async Task<IActionResult> StartAuctionAsync(
         [FromRoute] Guid id, CancellationToken ct)
     {
-        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.GetUserId();
 
         _ = await _mediator.Send(new StartAuctionCommand(id, userId), ct);
 
@@ -115,7 +126,7 @@ public class AuctionsController : ControllerBase
     public async Task<IActionResult> EndAuctionAsync(
         [FromRoute] Guid id, CancellationToken ct)
     {
-        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.GetUserId();
 
         _ = await _mediator.Send(new EndAuctionCommand(id, userId), ct);
 
@@ -131,7 +142,7 @@ public class AuctionsController : ControllerBase
     public async Task<IActionResult> CancelAuctionAsync(
         [FromRoute] Guid id, CancellationToken ct)
     {
-        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.GetUserId();
 
         _ = await _mediator.Send(new CancelAuctionCommand(id, userId), ct);
 
@@ -149,7 +160,7 @@ public class AuctionsController : ControllerBase
         [FromBody] PostponeAuctionRequest request,
         CancellationToken ct)
     {
-        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.GetUserId();
 
         var command = new PostponeAuctionCommand(
             auctionId: id,
