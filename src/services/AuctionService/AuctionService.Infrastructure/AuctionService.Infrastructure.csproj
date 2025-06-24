@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.20" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\shared\SharedInfrastructure\SharedInfrastructure.csproj" />
     <ProjectReference Include="..\AuctionService.Domain\AuctionService.Domain.csproj" />
   </ItemGroup>

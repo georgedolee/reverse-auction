@@ -1,6 +1,8 @@
 using AuctionService.API.Extensions;
 using AuctionService.Application.Extensions;
 using AuctionService.Infrastructure.Extensions;
+using AuctionService.Infrastructure.Scheduling;
+using Hangfire;
 using Serilog;
 using SharedInfrastructure.Middlewares;
 
@@ -27,6 +29,14 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseHangfireDashboard();
+
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var scheduler = scope.ServiceProvider.GetRequiredService<IJobScheduler>();
+    scheduler.ConfigureRecurringJobs();
+}
 
 app.Run();
