@@ -100,9 +100,9 @@
 
     // ---------- User Roles ----------
     {
-      "UpstreamPathTemplate": "/gateway/users/{id}/roles/{roleName}",
+      "UpstreamPathTemplate": "/gateway/users/{id}/roles",
       "UpstreamHttpMethod": [ "Post", "Delete" ],
-      "DownstreamPathTemplate": "/api/users/{id}/roles/{roleName}",
+      "DownstreamPathTemplate": "/api/users/{id}/roles",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

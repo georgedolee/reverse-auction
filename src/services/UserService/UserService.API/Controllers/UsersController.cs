@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Constants;
 using SharedKernel.Exceptions;
-using SharedKernel.Guards;
 using SharedKernel.Responses;
 using SharedKernel.Results;
 using System.Security.Claims;
+using UserService.Application.Contracts;
 using UserService.Application.Contracts.Models;
 using UserService.Application.Contracts.Requests;
 using UserService.Application.Features.Users.Commands.AddToRole;
@@ -102,30 +102,34 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("{userId:guid}/roles/{roleName}")]
+    [HttpPost("{id:guid}/roles")]
     [Authorize(Policy = RolePolicies.AdminsOnly)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddToRole(
-        [FromRoute] AddUserToRoleCommand command,
+        [FromRoute] Guid id,
+        [FromBody] RoleDto dto,
         CancellationToken ct)
     {
+        var command = new AddUserToRoleCommand(userId: id, roleName: dto.RoleName);
         _ = await _mediator.Send(command, ct);
 
         return Ok(ApiResponse<object?>
             .Ok($"User with id {command.UserId} successfully added to the role {command.RoleName}"));
     }
 
-    [HttpDelete("{userId:guid}/roles/{roleName}")]
+    [HttpDelete("{id:guid}/roles")]
     [Authorize(Policy = RolePolicies.AdminsOnly)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveFromRole(
-        [FromRoute] RemoveFromRoleCommand command,
+        [FromRoute] Guid id,
+        [FromBody] RoleDto dto,
         CancellationToken ct)
     {
+        var command = new RemoveFromRoleCommand(userId: id, roleName: dto.RoleName);
         _ = await _mediator.Send(command, ct);
 
         return NoContent();

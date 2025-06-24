@@ -1,10 +1,15 @@
 ﻿using MediatR;
+using UserService.Application.Contracts;
 
 namespace UserService.Application.Features.Users.Commands.AddToRole;
 
-public sealed class AddUserToRoleCommand : IRequest<bool>
+public sealed class AddUserToRoleCommand : RoleDto, IRequest<bool>
 {
-    public Guid UserId { get; set; }
+    public AddUserToRoleCommand(Guid userId, string roleName)
+    {
+        UserId = userId;
+        RoleName = roleName;
+    }
 
-    public string RoleName { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
 }

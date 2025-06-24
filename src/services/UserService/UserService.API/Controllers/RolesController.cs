@@ -11,6 +11,7 @@ using UserService.Application.Features.Roles.Commands.Delete;
 using UserService.Application.Features.Roles.Queries.GetById;
 using UserService.Application.Features.Roles.Queries.GetPaginated;
 using UserService.Application.Contracts.Requests;
+using UserService.Application.Contracts;
 
 namespace UserService.API.Controllers;
 
@@ -80,10 +81,10 @@ public class RolesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateRoleAsync(
         [FromRoute] Guid id,
-        [FromBody] UpdateRoleRequest request,
+        [FromBody] RoleDto dto,
         CancellationToken ct)
     {
-        var command = new UpdateRoleCommand(id: id, name: request.Name);
+        var command = new UpdateRoleCommand(id: id, roleName: dto.RoleName);
         var response = await _mediator.Send(command, ct);
 
         return Ok(ApiResponse<RoleModel>

@@ -29,7 +29,7 @@ internal sealed class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleComma
         Guard.EnsureFound(role, nameof(role), command.Id, _logger);
 
         _logger.LogInformation("Updating role with properties {@Properties}.", command);
-        role!.Name = command.Name;
+        role!.Name = command.RoleName;
 
         var result = await _roleManager.UpdateAsync(role);
 

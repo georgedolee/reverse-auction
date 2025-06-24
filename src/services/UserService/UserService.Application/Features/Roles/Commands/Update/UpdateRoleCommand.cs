@@ -1,15 +1,15 @@
 ﻿using MediatR;
+using UserService.Application.Contracts;
 using UserService.Application.Contracts.Models;
-using UserService.Application.Contracts.Requests;
 
 namespace UserService.Application.Features.Roles.Commands.Update;
 
-public sealed class UpdateRoleCommand : UpdateRoleRequest, IRequest<RoleModel>
+public sealed class UpdateRoleCommand : RoleDto, IRequest<RoleModel>
 {
-    public UpdateRoleCommand(Guid id, string name)
+    public UpdateRoleCommand(Guid id, string roleName)
     {
         Id = id;
-        Name = name;
+        RoleName = roleName;
     }
 
     public Guid Id { get; set; }

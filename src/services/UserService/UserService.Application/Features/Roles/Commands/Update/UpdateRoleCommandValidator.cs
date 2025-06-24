@@ -9,7 +9,7 @@ public sealed class UpdateRoleCommandValidator : AbstractValidator<UpdateRoleCom
     {
         RuleFor(x => x.Id).ValidId();
 
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name can't be empty.");
+        RuleFor(x => x.RoleName)
+            .NotEmpty().WithMessage("RoleName can't be empty.");
     }
 }
