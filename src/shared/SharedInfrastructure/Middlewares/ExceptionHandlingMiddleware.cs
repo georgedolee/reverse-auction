@@ -28,6 +28,11 @@ public class ExceptionHandlingMiddleware
             _logger.LogWarning(ex, "Access forbidden: {Message}", ex.Message);
             await ExceptionHandler.HandleForbiddenExceptionAsync(context, ex);
         }
+        catch (UnauthorizedAccessException ex)
+        {
+            _logger.LogWarning(ex, "Unauthrorized access: {Message}", ex.Message);
+            await ExceptionHandler.HandleUnauthorizedAccessExceptionAsync(context);
+        }
         catch (ValidationException ex)
         {
             _logger.LogWarning(ex, "Validation failed: {Errors}", ex.Errors);

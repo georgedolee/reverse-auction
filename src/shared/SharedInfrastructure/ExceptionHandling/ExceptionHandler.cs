@@ -26,122 +26,83 @@ public static class ExceptionHandler
             Instance = context.Request.Path
         };
 
-        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
+        await WriteProblemResponseAsync(
+            context: context, 
+            problemDetails: problemDetails, 
+            statusCode: StatusCodes.Status400BadRequest);
     }
 
-    public static async Task HandleNotFoundExceptionAsync(HttpContext context, NotFoundException ex)
-    {
-        var problemDetails = new ProblemDetails
+    public static Task HandleNotFoundExceptionAsync(HttpContext context, NotFoundException ex) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status404NotFound, 
+            title: "Resource not found.", 
+            detail: ex.Message, 
+            type: ProblemTypeUrls.NotFound);
+
+    public static Task HandleInvalidOperationExceptionAsync(HttpContext context, InvalidOperationException ex) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status400BadRequest, 
+            title: "Invalid operation.", 
+            detail: ex.Message, 
+            type: ProblemTypeUrls.BadRequest);
+
+
+    public static Task HandleUnauthorizedAccessExceptionAsync(HttpContext context) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status401Unauthorized, 
+            title: "Unauthorized", 
+            detail: "Authentication is required or the provided token is invalid.", 
+            type: ProblemTypeUrls.Unauthorized);
+
+    public static Task HandleForbiddenExceptionAsync(HttpContext context, ForbiddenException ex) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status403Forbidden, 
+            title: "Forbidden", 
+            detail: ex.Message, 
+            type: ProblemTypeUrls.Forbidden);
+
+    public static Task HandleRateLimitExceptionAsync(HttpContext context) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status429TooManyRequests, 
+            title: "Too Many Requests", 
+            detail: "You have exceeded the allowed number of requests. Please try again later.", 
+            type: ProblemTypeUrls.TooManyRequests);
+
+    public static Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException ex) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status400BadRequest, 
+            title: "Invalid argument.", 
+            detail: ex.Message, 
+            type: ProblemTypeUrls.BadRequest);
+
+    public static Task HandleUnexpectedExceptionAsync(HttpContext context) =>
+        WriteSimpleProblemAsync(
+            context: context, 
+            statusCode: StatusCodes.Status500InternalServerError, 
+            title: "An unexpected error occurred.", 
+            detail: "Please try again later or contact support.", 
+            type: ProblemTypeUrls.InternalServerError);
+
+    private static Task WriteSimpleProblemAsync(HttpContext context, int statusCode, string title, string detail, string type) =>
+        WriteProblemResponseAsync(context, new ProblemDetails
         {
-            Type = ProblemTypeUrls.NotFound,
-            Title = "Resource not found.",
-            Status = StatusCodes.Status404NotFound,
-            Detail = ex.Message,
+            Type = type,
+            Status = statusCode,
+            Title = title,
+            Detail = detail,
             Instance = context.Request.Path
-        };
+        }, statusCode);
 
-        context.Response.StatusCode = StatusCodes.Status404NotFound;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    }
-
-    public static async Task HandleInvalidOperationExceptionAsync(HttpContext context, InvalidOperationException ex)
+    private static Task WriteProblemResponseAsync(HttpContext context, ProblemDetails problemDetails, int statusCode)
     {
-        var problemDetails = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.BadRequest,
-            Title = "Invalid operation.",
-            Status = StatusCodes.Status400BadRequest,
-            Detail = ex.Message,
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    }
-
-    public static async Task HandleUnauthorizedExceptionAsync(HttpContext context)
-    {
-        var problem = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.Unauthorized,
-            Title = "Unauthorized",
-            Status = StatusCodes.Status401Unauthorized,
-            Detail = "Authentication is required or the provided token is invalid.",
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problem);
-    }
-
-    public static async Task HandleForbiddenExceptionAsync(HttpContext context, ForbiddenException ex)
-    {
-        var problem = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.Forbidden,
-            Title = "Forbidden",
-            Status = StatusCodes.Status403Forbidden,
-            Detail = ex.Message,
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status403Forbidden;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problem);
-    }
-
-    public static async Task HandleRateLimitExceptionAsync(HttpContext context)
-    {
-        var problem = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.TooManyRequests,
-            Title = "Too Many Requests",
-            Status = StatusCodes.Status429TooManyRequests,
-            Detail = "You have exceeded the allowed number of requests. Please try again later.",
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-        context.Response.ContentType = "application/problem+json";
-
-        await context.Response.WriteAsJsonAsync(problem);
-    }
-
-    public static async Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException ex)
-    {
-        var problemDetails = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.BadRequest,
-            Title = "Invalid argument.",
-            Status = StatusCodes.Status400BadRequest,
-            Detail = ex.Message,
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    }
-
-
-    public static async Task HandleUnexpectedExceptionAsync(HttpContext context)
-    {
-        var problemDetails = new ProblemDetails
-        {
-            Type = ProblemTypeUrls.InternalServerError,
-            Title = "An unexpected error occurred.",
-            Status = StatusCodes.Status500InternalServerError,
-            Detail = "Please try again later or contact support.",
-            Instance = context.Request.Path
-        };
-
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
+        return context.Response.WriteAsJsonAsync(problemDetails);
     }
 }

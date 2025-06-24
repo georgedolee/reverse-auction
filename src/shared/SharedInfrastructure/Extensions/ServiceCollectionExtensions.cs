@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
                 {
                     context.HandleResponse();
 
-                    await ExceptionHandler.HandleUnauthorizedExceptionAsync(context.HttpContext);
+                    await ExceptionHandler.HandleUnauthorizedAccessExceptionAsync(context.HttpContext);
                 },
 
                 OnForbidden = async context =>
