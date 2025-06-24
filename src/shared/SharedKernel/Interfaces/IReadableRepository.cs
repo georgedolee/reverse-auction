@@ -10,6 +10,12 @@ public interface IReadableRepository<T>
 
     Task<IEnumerable<T>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken ct = default);
 
+    Task<IEnumerable<T>> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        IQueryable<T> query,
+        CancellationToken ct = default);
+
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default);
 
     Task<int> CountAsync(CancellationToken ct = default);
