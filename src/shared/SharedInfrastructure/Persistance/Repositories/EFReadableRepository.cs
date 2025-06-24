@@ -38,6 +38,19 @@ public class EFReadableRepository<T> : IReadableRepository<T>
         return items;
     }
 
+    public async Task<IEnumerable<T>> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        IQueryable<T> query,
+        CancellationToken ct = default)
+    {
+        return await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
+
+    }
+
     public async Task<int> CountAsync(CancellationToken ct = default)
     {
         return await _context.Set<T>().CountAsync(ct);

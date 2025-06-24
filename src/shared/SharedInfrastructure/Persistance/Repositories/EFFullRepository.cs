@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedKernel.Interfaces;
-using SharedKernel.Results;
 using System.Linq.Expressions;
 
 namespace SharedInfrastructure.Persistance.Repositories;
@@ -34,6 +33,13 @@ public class EFFullRepository<T> : IFullRepository<T>
 
     public Task<IEnumerable<T>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken ct = default)
         => _readable.GetPagedAsync(pageNumber, pageSize, ct);
+
+    public Task<IEnumerable<T>> GetPagedAsync(
+        int pageNumber, 
+        int pageSize,
+        IQueryable<T> query,
+        CancellationToken ct = default)
+        => _readable.GetPagedAsync(pageNumber, pageSize, query, ct);
 
     public IQueryable<T> Query(Expression<Func<T, bool>>? expression)
         => _queryable.Query(expression);
