@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace AuctionService.API.Extensions;
+namespace SharedInfrastructure.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {

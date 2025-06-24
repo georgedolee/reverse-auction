@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Photos;
+using Serilog;
 using SharedInfrastructure.Extensions;
 
 namespace AuctionService.API.Extensions;
@@ -18,6 +19,18 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddRoleBasedPolicies();
         builder.Services.AddAuthorization();
+
+        builder.Services.AddGrpcClient<PhotoService.PhotoServiceClient>(options =>
+        {
+            var grpcUrl = builder.Configuration["FileServiceUrl"];
+
+            if (string.IsNullOrEmpty(grpcUrl))
+            {
+                throw new InvalidOperationException("FileServiceUrl configuration is missing");
+            }
+
+            options.Address = new Uri(grpcUrl);
+        });
 
         return builder;
     }

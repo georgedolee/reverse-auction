@@ -1,5 +1,4 @@
-﻿using AuctionService.API.Extensions;
-using AuctionService.Application.Contracts.Models;
+﻿using AuctionService.Application.Contracts.Models;
 using AuctionService.Application.Contracts.Requests;
 using AuctionService.Application.Features.Auctions.Commands.Cancel;
 using AuctionService.Application.Features.Auctions.Commands.Create;
@@ -12,6 +11,7 @@ using AuctionService.Application.Features.Auctions.Queries.Search;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedInfrastructure.Extensions;
 using SharedKernel.Responses;
 using SharedKernel.Results;
 
