@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedInfrastructure.Extensions;
 using SharedKernel.Constants;
 using SharedKernel.Exceptions;
 using SharedKernel.Responses;
 using SharedKernel.Results;
-using System.Security.Claims;
 using UserService.Application.Contracts;
 using UserService.Application.Contracts.Models;
 using UserService.Application.Contracts.Requests;
@@ -177,8 +177,8 @@ public class UsersController : ControllerBase
 
     private void EnsureUserOwnsResource(Guid id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId != id.ToString())
+        var userId = User.GetUserId();
+        if (userId != id)
         {
             throw new ForbiddenException();
         }
