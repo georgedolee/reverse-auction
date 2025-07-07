@@ -9,6 +9,7 @@ public class AuctionModel
 
     public required string Title { get; set; }
     public required string Description { get; set; }
+    public string? Image { get; set; }
     public decimal DesiredPrice { get; set; }
 
     public DateTime StartsAt { get; set; }

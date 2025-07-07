@@ -21,6 +21,7 @@ internal sealed class AuctionMappingConfig : IRegister
             .Map(dest => dest.CreatedAt, _ => DateTime.UtcNow)
             .Map(dest => dest.Status, _ => AuctionStatus.Pending)
             .Ignore(dest => dest.Id)
+            .Ignore(dest => dest.Image!)
             .Ignore(dest => dest.Bids!)
             .Ignore(dest => dest.LowestBidAmount!)
             .Ignore(dest => dest.LowestBidderId!);

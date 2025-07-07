@@ -11,6 +11,7 @@ public class Auction
 
     public required string Title { get; set; }
     public required string Description { get; set; }
+    public string? Image { get; set; }
     public decimal DesiredPrice { get; set; }
     public required string Currency { get; set; }
 
@@ -90,7 +91,7 @@ public class Auction
 
         if (LowestBidAmount.HasValue && LowestBidderId == bid.BidderId)
         {
-            throw new InvalidOperationException("You are already the highest bidder.");
+            throw new InvalidOperationException("You are already the current winning bidder.");
         }
 
         var acceptableBid = LowestBidAmount.HasValue
