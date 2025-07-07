@@ -36,13 +36,11 @@ internal sealed class SearchAuctionsQueryHandler
            (!query.MaxEndTime.HasValue || a.EndsAt <= query.MaxEndTime) &&
            (!query.MaxCurrentBidAmount.HasValue || a.LowestBidAmount <= query.MaxCurrentBidAmount) &&
            (!query.Status.HasValue || a.Status == query.Status)
-       );
+        );
 
         var totalCount = await auctionsQuery.CountAsync(ct);
-        var pagedAuctions = await auctionsQuery
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
-            .ToListAsync(ct);
+        var pagedAuctions = await _unitOfWork.Auctions
+            .GetPagedAsync(query.PageNumber, query.PageSize, auctionsQuery, ct);
 
         _logger.LogInformation("Auctions fetched successfully.");
         return new PagedResult<AuctionModel>(
