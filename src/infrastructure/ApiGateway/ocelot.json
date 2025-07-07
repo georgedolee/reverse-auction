@@ -198,7 +198,44 @@
           "Port": 7215
         }
       ]
-    }
+    },
 
+    // ---------- Bids ----------
+    {
+      "UpstreamPathTemplate": "/gateway/bids",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/bids",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/bids/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/bids/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/bids/search",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/bids/search",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7215
+        }
+      ]
+    }
   ]
 }

@@ -48,7 +48,6 @@ public class EFReadableRepository<T> : IReadableRepository<T>
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync(ct);
-
     }
 
     public async Task<int> CountAsync(CancellationToken ct = default)

@@ -23,7 +23,7 @@ public static class ExceptionHandler
             Title = "One or more validation errors occurred.",
             Status = StatusCodes.Status400BadRequest,
             Detail = "See the errors property for details.",
-            Instance = context.Request.Path
+            Instance = context.Request.Path,
         };
 
         await WriteProblemResponseAsync(
@@ -99,7 +99,8 @@ public static class ExceptionHandler
             Instance = context.Request.Path
         }, statusCode);
 
-    private static Task WriteProblemResponseAsync(HttpContext context, ProblemDetails problemDetails, int statusCode)
+    private static Task WriteProblemResponseAsync<TProblem>(HttpContext context, TProblem problemDetails, int statusCode)
+        where TProblem : ProblemDetails
     {
         context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/problem+json";
