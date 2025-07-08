@@ -1,4 +1,3 @@
-using Photos;
 using Serilog;
 using SharedInfrastructure.Middlewares;
 using UserService.API.Extensions;

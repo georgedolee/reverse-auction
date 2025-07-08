@@ -19,7 +19,7 @@ internal sealed class CreateAuctionCommandHandler : IRequestHandler<CreateAuctio
         _logger = logger;
     }
 
-    public async Task<AuctionModel?> Handle(CreateAuctionCommand command, CancellationToken ct)
+    public async Task<AuctionModel> Handle(CreateAuctionCommand command, CancellationToken ct)
     {
         _logger.LogInformation("Initiating auction creation with properties: {@auction}", command);
 

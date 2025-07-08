@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\Protos\Protos.csproj" />
     <ProjectReference Include="..\AuctionService.Application\AuctionService.Application.csproj" />
   </ItemGroup>
 

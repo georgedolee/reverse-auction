@@ -86,8 +86,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-//Log.Information("Seeding database.");
-//SeedData.EnsureSeedData(app);
-//Log.Information("Done seeding database.");
+Log.Information("Seeding database.");
+SeedData.EnsureSeedData(app);
+Log.Information("Done seeding database.");
 
 app.Run();

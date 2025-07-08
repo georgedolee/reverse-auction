@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{3038910A-33E0-42A2-84F6-9EBF90816725}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{87FF20F9-BFC6-47EB-8C20-D8D96C06832B}"
+	ProjectSection(SolutionItems) = preProject
+		src\services\UserService\Dockerfile = src\services\UserService\Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.API", "src\services\UserService\UserService.API\UserService.API.csproj", "{92F47805-82F4-4863-A5E0-C99CD369ABBD}"
 EndProject
@@ -24,6 +27,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure", "src\services\UserService\UserService.Infrastructure\UserService.Infrastructure.csproj", "{7E502FA5-6755-44F4-B418-E48C6760A031}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuctionService", "AuctionService", "{DF6FC1FA-FF46-4A90-9A7E-CD55A9761A2A}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionService.API", "src\services\AuctionService\AuctionService.API\AuctionService.API.csproj", "{71055186-B958-4BF1-8459-80FD194651AA}"
 EndProject
@@ -34,6 +40,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionService.Application", "src\services\AuctionService\AuctionService.Application\AuctionService.Application.csproj", "{430C35DC-150D-4908-8FB3-76F7B3C04138}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{C4AC51C8-1DF8-4DBA-9AED-9BC741C3D17C}"
+	ProjectSection(SolutionItems) = preProject
+		src\identity\Dockerfile = src\identity\Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "src\identity\IdentityServer\IdentityServer.csproj", "{55030493-5243-4170-916E-D4C77D4432AD}"
 EndProject
@@ -44,8 +53,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protos", "src\shared\Protos\Protos.csproj", "{DC59B2ED-F986-4213-B3DE-FB37F4BD7A5D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileService", "FileService", "{7FB0BC1E-DAC8-429C-97F3-9F8F4FB8A4A7}"
+	ProjectSection(SolutionItems) = preProject
+		src\services\FileService\Dockerfile = src\services\FileService\Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.API", "src\services\FileService\FileService.API\FileService.API.csproj", "{A36263A0-DB18-4A9C-B36E-F0F20A82FC7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
