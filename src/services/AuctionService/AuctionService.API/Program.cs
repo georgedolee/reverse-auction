@@ -1,8 +1,10 @@
 using AuctionService.API.Extensions;
 using AuctionService.Application.Extensions;
 using AuctionService.Infrastructure.Extensions;
+using AuctionService.Infrastructure.Persistance;
 using AuctionService.Infrastructure.Scheduling;
 using Hangfire;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using SharedInfrastructure.Middlewares;
 
@@ -18,6 +20,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var context = scope.ServiceProvider.GetService<AuctionDbContext>();
+    ArgumentNullException.ThrowIfNull(context, nameof(context));
+    context.Database.Migrate();
 }
 
 app.UseSerilogRequestLogging();

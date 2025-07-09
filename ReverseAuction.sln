@@ -47,6 +47,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "src\identity\IdentityServer\IdentityServer.csproj", "{55030493-5243-4170-916E-D4C77D4432AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{719EFB54-F973-46F9-BEAA-D465818D004A}"
+	ProjectSection(SolutionItems) = preProject
+		src\infrastructure\Dockerfile = src\infrastructure\Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "src\infrastructure\ApiGateway\ApiGateway.csproj", "{0B7AC299-9871-A73C-7176-786B894E4AB8}"
 EndProject
